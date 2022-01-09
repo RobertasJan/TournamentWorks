@@ -1,11 +1,20 @@
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
+using TournamentWorks.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Services.AddDbContextFactory<TournamentContext>(options =>
+{
+    options.UseSqlServer("Server=FSCC-ROBERTASJ\\SQLEXPRESS;Database=tournament;Integrated Security=true;");//configuration.GetConnectionString("DefaultConnection"));
+});
+//builder.Services.AddDbContext<TournamentContext>(options =>
+//{
+//    options.UseSqlServer("Server=FSCC-ROBERTASJ\\SQLEXPRESS;Database=tournament;Integrated Security=true;");//configuration.GetConnectionString("DefaultConnection"));
+//});
 
 var app = builder.Build();
 

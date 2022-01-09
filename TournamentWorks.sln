@@ -3,11 +3,26 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32002.185
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TournamentWorks.Server", "TournamentWorks\Server\TournamentWorks.Server.csproj", "{A231300A-BD1D-4E69-8631-D73870919C41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TournamentWorks.Server", "TournamentWorks\Server\TournamentWorks.Server.csproj", "{A231300A-BD1D-4E69-8631-D73870919C41}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TournamentWorks.Client", "TournamentWorks\Client\TournamentWorks.Client.csproj", "{06675593-6B85-40E7-9339-6B6E5F712652}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TournamentWorks.Client", "TournamentWorks\Client\TournamentWorks.Client.csproj", "{06675593-6B85-40E7-9339-6B6E5F712652}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AED51725-9114-4D8C-AF11-6585AE9AFC45} = {AED51725-9114-4D8C-AF11-6585AE9AFC45}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TournamentWorks.Shared", "TournamentWorks\Shared\TournamentWorks.Shared.csproj", "{FD4576E0-B752-49F4-B0C1-00F85F468ED9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TournamentWorks.Shared", "TournamentWorks\Shared\TournamentWorks.Shared.csproj", "{FD4576E0-B752-49F4-B0C1-00F85F468ED9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TournamentWorks.Domain", "TournamentWorks.Domain\TournamentWorks.Domain.csproj", "{AED51725-9114-4D8C-AF11-6585AE9AFC45}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TournamentWorks.Infrastructure", "TournamentWorks.Infrastructure\TournamentWorks.Infrastructure.csproj", "{DA711A8F-9581-4ACE-8439-6421DAED46CC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{855B1FDA-E63E-4009-9DCB-AC628ED5BAFA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{61231F50-58F8-4B18-9A31-E973C87954F4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TournamentWorks.Domain.Repository", "TournamentWorks.Domain.Repository\TournamentWorks.Domain.Repository.csproj", "{951D27BA-8A00-4B8F-B7E9-E4DE361BF0CB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TournamentWorks.Infrastructure.Repository", "TournamentWorks.Infrastructure.Repository\TournamentWorks.Infrastructure.Repository.csproj", "{A5FF3972-DD76-46BE-AF42-C91B204CC815}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,9 +42,31 @@ Global
 		{FD4576E0-B752-49F4-B0C1-00F85F468ED9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD4576E0-B752-49F4-B0C1-00F85F468ED9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD4576E0-B752-49F4-B0C1-00F85F468ED9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AED51725-9114-4D8C-AF11-6585AE9AFC45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AED51725-9114-4D8C-AF11-6585AE9AFC45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AED51725-9114-4D8C-AF11-6585AE9AFC45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AED51725-9114-4D8C-AF11-6585AE9AFC45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA711A8F-9581-4ACE-8439-6421DAED46CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA711A8F-9581-4ACE-8439-6421DAED46CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA711A8F-9581-4ACE-8439-6421DAED46CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA711A8F-9581-4ACE-8439-6421DAED46CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{951D27BA-8A00-4B8F-B7E9-E4DE361BF0CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{951D27BA-8A00-4B8F-B7E9-E4DE361BF0CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{951D27BA-8A00-4B8F-B7E9-E4DE361BF0CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{951D27BA-8A00-4B8F-B7E9-E4DE361BF0CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5FF3972-DD76-46BE-AF42-C91B204CC815}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5FF3972-DD76-46BE-AF42-C91B204CC815}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5FF3972-DD76-46BE-AF42-C91B204CC815}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5FF3972-DD76-46BE-AF42-C91B204CC815}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AED51725-9114-4D8C-AF11-6585AE9AFC45} = {855B1FDA-E63E-4009-9DCB-AC628ED5BAFA}
+		{DA711A8F-9581-4ACE-8439-6421DAED46CC} = {61231F50-58F8-4B18-9A31-E973C87954F4}
+		{951D27BA-8A00-4B8F-B7E9-E4DE361BF0CB} = {855B1FDA-E63E-4009-9DCB-AC628ED5BAFA}
+		{A5FF3972-DD76-46BE-AF42-C91B204CC815} = {61231F50-58F8-4B18-9A31-E973C87954F4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0B0BDEA6-3580-4434-95DC-B372F93BDA1D}
