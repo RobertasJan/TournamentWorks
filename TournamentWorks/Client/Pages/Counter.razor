@@ -2,17 +2,104 @@
 
 <PageTitle>Counter</PageTitle>
 
-<h1>Counter</h1>
+<h1>Point counter</h1>
+<hr />
 
-<p role="status">Current count: @currentCount</p>
-
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<div class="row pt-4">
+    <div class="col-6 left-side-score">
+        <div class="points-text">Team 1 points: <span class="points-score">@leftSidePoints</span></div>
+        <div>
+        @if (leftSidePoints == 0 && rightSidePoints == 0)
+        {
+            <button class="btn btn-secondary info-button" @onclick="ChangeServeSide"> <ShuttleImage/> </button>
+            <button class="btn btn-secondary info-button" @onclick="ChangeSides"><span class="oi oi-resize-width" style="font-size: 26px;" title="arrow-circle-left" aria-hidden="true"></span></button>
+        } else
+        {
+            <button class="btn btn-secondary info-button" @onclick="ReturnPoints"><span class="oi oi-arrow-circle-left" style="font-size: 26px;" title="arrow-circle-left" aria-hidden="true"></span></button>
+        }
+        </div>
+        <div class="player-name-area player-name-area-tl">@TopLeftName
+            @if (true)
+            {
+                <ShuttleImage />
+            }
+        </div>
+        <button class="btn points-add-button" @onclick="IncrementLeftSide"><span class="oi oi-plus" title="plus" aria-hidden="true"></span></button>
+        <div class="player-name-area player-name-area-bl">@BottomLeftName
+            @if (true)
+            {
+                <ShuttleImage />
+            }
+        </div>
+    </div>
+    <div class="col-6 right-side-score">
+        <div class="points-text">Team 2 points: <span class="points-score">@rightSidePoints</span></div>
+        <div class="player-name-area player-name-area-tr">
+            @if (true)
+            {
+                <ShuttleImage />
+            }
+            @TopRightName
+        </div>
+        <button class="btn points-add-button" style="left: 94%;" @onclick="IncrementRightSide"><span class="oi oi-plus" title="plus" aria-hidden="true"></span></button>
+        <div class="player-name-area player-name-area-br">
+            @if (true)
+            {
+                <ShuttleImage />
+            }
+            @BottomRightName
+        </div>
+    </div>
+</div>
 
 @code {
-    private int currentCount = 0;
+    private int leftSidePoints = 0;
+    private int rightSidePoints = 0;
+    private Stack<Point> pointStack = new Stack<Point>();
 
-    private void IncrementCount()
+    private bool team1LeftSide = true;
+        
+    private string TopLeftName = "";
+    private string BottomLeftName = "";
+    private string TopRightName = "";
+    private string BottomRightName = "";
+
+    private enum Point
     {
-        currentCount++;
+        LeftSide,
+        RightSide
+    }
+
+    private void IncrementLeftSide()
+    {
+        leftSidePoints++;
+        pointStack.Push(Point.LeftSide);
+    }
+
+    private void IncrementRightSide()
+    {
+        rightSidePoints++;
+        pointStack.Push(Point.RightSide);
+    }
+
+    private void ReturnPoints()
+    {
+        if (pointStack.Peek() == Point.LeftSide)
+        {
+            leftSidePoints--;
+        } else
+        {
+            rightSidePoints--;
+        }
+        pointStack.Pop();
+    }
+
+    private void ChangeServeSide()
+    {
+        
+    }
+    private void ChangeSides()
+    {
+        
     }
 }

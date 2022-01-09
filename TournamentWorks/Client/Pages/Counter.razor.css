@@ -1,0 +1,68 @@
+﻿.points-text {
+    color: var(--primary);
+    font-size: 2rem;
+}
+
+.points-score {
+    color: var(--tertiary);
+    font-size: 2.4rem;
+}
+
+.points-add-button {
+    position: fixed;
+    height: 70px;
+    width: 70px;
+    top: 57%;
+    background-color: var(--secondary);
+    color: white;
+    font-size: 26px;
+}
+
+.info-button {
+    height: 60px;
+    width: 60px;
+    margin: 5px;
+}
+
+.left-side-score, .right-side-score {
+    background-color: #298850; /* green court color */
+    height: 80vh;
+}
+
+.left-side-score {
+    border-right: solid white;
+}
+
+.right-side-score {
+    border-left: solid white;
+    float: right;
+}
+
+.pull-right {
+    float: right !important;
+}
+
+.player-name-area {
+    position: fixed;
+    color: white;
+}
+
+.player-name-area-tl {
+    top: 50%;
+    left: 45%;
+}
+
+.player-name-area-bl {
+    top: 70%;
+    left: 45%;
+}
+
+.player-name-area-tr {
+    top: 50%;
+    left: 63%;
+}
+
+.player-name-area-br {
+    top: 70%;
+    left: 63%;
+}

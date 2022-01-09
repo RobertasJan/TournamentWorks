@@ -1,0 +1,96 @@
+﻿@page "/match"
+
+<PageTitle>Match</PageTitle>
+
+<h1>Create match</h1>
+<hr />
+<h2>Match settings</h2>
+<div class="row pt-2">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="match-type">Match type</label>
+            <select class="form-control" id="match-type" @onchange="MatchTypeChange">
+                <option value="1">Men's singles</option>
+                <option value="2">Women's singles</option>
+                <option value="3">Men's doubles</option>
+                <option value="4">Women's doubles</option>
+                <option value="5">Mixed doubles</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="points-to-win">Points to win</label>
+            <select class="form-control" id="points-to-win">
+                <option value="11">11 (deuce 15)</option>
+                <option value="15">15 (deuce 17)</option>
+                <option value="21" selected="selected">21 (deuce 30)</option>
+            </select>
+        </div>
+    </div>
+     <div class="col-md-6">
+           <div class="form-group">
+            <label for="games-to-win">Games to win</label>
+            <select class="form-control" id="games-to-win">
+                <option value="1">Best of 1</option>
+                <option value="2" selected="selected">Best of 3</option>
+                <option value="3">Best of 5</option>
+            </select>
+        </div>
+  
+    </div>
+</div>
+
+<hr />
+<div class="row pb-4">
+    <div class="col-md-6">
+        <h2>Team 1</h2>
+        <h3 class="pt-2">Player 1</h3>
+        <div class="form-group">
+            <label for="name1">Name</label>
+            <input type="text" class="form-control" id="name1" placeholder="Enter name">
+        </div>
+        @if (!singles)
+        {
+            <h3 class="pt-2">Player 2</h3>
+            <div class="form-group">
+                <label for="name2">Name</label>
+                <input type="text" class="form-control" id="name2" placeholder="Enter name">
+            </div>
+        }
+    </div>
+    <div class="col-md-6">
+        <h2>Team 2</h2>      
+        <h3 class="pt-2">Player 1</h3>
+        <div class="form-group">
+            <label for="name3">Name</label>
+            <input type="text" class="form-control" id="name3" placeholder="Enter name">
+        </div>
+        @if (!singles)
+        {
+            <h3 class="pt-2">Player 2</h3>
+            <div class="form-group">
+                <label for="name4">Name</label>
+                <input type="text" class="form-control" id="name4" placeholder="Enter name">
+            </div>
+        }
+    </div>
+</div>
+<button class="btn btn-primary" @onclick="Create">Create</button>
+
+@code {
+    private bool singles = true;
+
+    private void MatchTypeChange(ChangeEventArgs e)
+    {
+        var matchType = int.Parse(e.Value.ToString());
+        singles = matchType <= 2; 
+    }
+
+    private void Create()
+    {
+        
+    }
+    private void SubmitPlayer()
+    {
+ 
+    }
+}
