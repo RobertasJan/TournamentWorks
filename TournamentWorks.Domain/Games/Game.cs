@@ -14,7 +14,8 @@ namespace TournamentWorks.Domain.Games
         public int Team2Score { get; set; } = 0;
         public GameResult Result { get; set; } = GameResult.Undetermined;
 
-        public Match Match { get; set; }
+        public Match? Match { get; set; }
+        public int MatchId { get; set; }
     }
     public enum GameResult : byte
     {

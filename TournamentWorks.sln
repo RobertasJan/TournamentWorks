@@ -24,6 +24,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TournamentWorks.Domain.Repo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TournamentWorks.Infrastructure.Repository", "TournamentWorks.Infrastructure.Repository\TournamentWorks.Infrastructure.Repository.csproj", "{A5FF3972-DD76-46BE-AF42-C91B204CC815}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{627FE2BF-1DA9-4D47-8CB6-C52AE03B391E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TournamentWorks.Tests", "TournamentWorks.Tests\TournamentWorks.Tests.csproj", "{B77802FF-4D78-42D4-9B1D-EA1621CF0114}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +62,10 @@ Global
 		{A5FF3972-DD76-46BE-AF42-C91B204CC815}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5FF3972-DD76-46BE-AF42-C91B204CC815}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5FF3972-DD76-46BE-AF42-C91B204CC815}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B77802FF-4D78-42D4-9B1D-EA1621CF0114}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B77802FF-4D78-42D4-9B1D-EA1621CF0114}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B77802FF-4D78-42D4-9B1D-EA1621CF0114}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B77802FF-4D78-42D4-9B1D-EA1621CF0114}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +75,7 @@ Global
 		{DA711A8F-9581-4ACE-8439-6421DAED46CC} = {61231F50-58F8-4B18-9A31-E973C87954F4}
 		{951D27BA-8A00-4B8F-B7E9-E4DE361BF0CB} = {855B1FDA-E63E-4009-9DCB-AC628ED5BAFA}
 		{A5FF3972-DD76-46BE-AF42-C91B204CC815} = {61231F50-58F8-4B18-9A31-E973C87954F4}
+		{B77802FF-4D78-42D4-9B1D-EA1621CF0114} = {627FE2BF-1DA9-4D47-8CB6-C52AE03B391E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0B0BDEA6-3580-4434-95DC-B372F93BDA1D}

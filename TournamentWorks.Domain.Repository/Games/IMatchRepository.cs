@@ -9,6 +9,8 @@ namespace TournamentWorks.Domain.Repository.Games
 {
     public interface IMatchRepository
     {
-        Task<bool> InsertMatch(Match match);
+        Match Get(int id);
+        Task<int> Add(Match match);
+        Task<int> Update(Match match);
     }
 }

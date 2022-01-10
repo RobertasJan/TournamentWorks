@@ -1,105 +1,252 @@
-﻿@page "/counter"
+﻿@page "/counter/{Id:int}"
+@using TournamentWorks.Domain.Games;
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
 
 <PageTitle>Counter</PageTitle>
 
 <h1>Point counter</h1>
 <hr />
-
+@if (currentGame != 0)
+{
+    <div> Team1 &nbsp;
+        @for (var i = 0; i < @currentGame; i++)
+        {
+            @team1Score[i]<text>-</text>@team2Score[i]<text>&nbsp;</text>
+        }
+        &nbsp; Team2
+    </div>
+}
 <div class="row pt-4">
     <div class="col-6 left-side-score">
-        <div class="points-text">Team 1 points: <span class="points-score">@leftSidePoints</span></div>
-        <div>
-        @if (leftSidePoints == 0 && rightSidePoints == 0)
+        <div class="points-text">Team @(team1LeftSide ? "1" : "2") points: <span class="points-score">@gameLogic.LeftSidePoints</span></div>
+        @if (gameLogic.LeftSidePoints == 0 && gameLogic.RightSidePoints == 0)
         {
-            <button class="btn btn-secondary info-button" @onclick="ChangeServeSide"> <ShuttleImage/> </button>
-            <button class="btn btn-secondary info-button" @onclick="ChangeSides"><span class="oi oi-resize-width" style="font-size: 26px;" title="arrow-circle-left" aria-hidden="true"></span></button>
-        } else
+            @if (currentGame == 0)
+            {
+                <button class="btn btn-secondary info-button" @onclick="ChangeServeSide"> <ShuttleImage/> </button>
+                <button class="btn btn-secondary info-button" @onclick="ChangeSides"><span class="oi oi-resize-width" style="font-size: 26px;" title="arrow-circle-left" aria-hidden="true"></span></button>
+            }
+            @if (!gameLogic.Singles)
+            {
+                <div class="switch-places-left"><button class="btn btn-secondary info-button" @onclick="SwitchPlacesLeft"><span class="oi oi-resize-width rotate-90deg" style="font-size: 26px;" title="arrow-circle-left" aria-hidden="true"></span></button></div>
+                <div class="switch-places-right"><button class="btn btn-secondary info-button" @onclick="SwitchPlacesRight"><span class="oi oi-resize-width rotate-90deg" style="font-size: 26px;" title="arrow-circle-left" aria-hidden="true"></span></button></div>
+            } 
+        } 
+        else if (!endMatch)
         {
             <button class="btn btn-secondary info-button" @onclick="ReturnPoints"><span class="oi oi-arrow-circle-left" style="font-size: 26px;" title="arrow-circle-left" aria-hidden="true"></span></button>
         }
-        </div>
-        <div class="player-name-area player-name-area-tl">@TopLeftName
-            @if (true)
+        @if (endMatch) {
+            <button class="btn btn-primary end-match-button pull-right" @onclick="EndMatch">End match</button>
+        }
+        @if (endGame)
+        {
+            <button class="btn btn-primary end-match-button pull-right" @onclick="EndGame">End game</button>
+        }
+        <div class="player-name-area player-name-area-tl">@gameLogic.TopLeftName
+            @if (gameLogic.Server == TournamentWorks.Shared.Serves.LeftSideTop)
             {
                 <ShuttleImage />
             }
         </div>
-        <button class="btn points-add-button" @onclick="IncrementLeftSide"><span class="oi oi-plus" title="plus" aria-hidden="true"></span></button>
-        <div class="player-name-area player-name-area-bl">@BottomLeftName
-            @if (true)
+        @if (!endGame && !endMatch)
+        {
+            <button class="btn points-add-button" style="left: 18%;" @onclick="IncrementLeftSide"><span class="oi oi-plus" title="plus" aria-hidden="true"></span></button>
+        }
+        <div class="player-name-area player-name-area-bl">@gameLogic.BottomLeftName
+            @if (gameLogic.Server == TournamentWorks.Shared.Serves.LeftSideBottom)
             {
                 <ShuttleImage />
             }
         </div>
     </div>
     <div class="col-6 right-side-score">
-        <div class="points-text">Team 2 points: <span class="points-score">@rightSidePoints</span></div>
+        <div class="points-text">Team @(!team1LeftSide ? "1" : "2") points: <span class="points-score">@gameLogic.RightSidePoints</span></div>
         <div class="player-name-area player-name-area-tr">
-            @if (true)
+            @if (gameLogic.Server == TournamentWorks.Shared.Serves.RightSideTop)
             {
                 <ShuttleImage />
             }
-            @TopRightName
+            @gameLogic.TopRightName
         </div>
+        @if (!endGame && !endMatch) 
+        {
         <button class="btn points-add-button" style="left: 94%;" @onclick="IncrementRightSide"><span class="oi oi-plus" title="plus" aria-hidden="true"></span></button>
+        }
         <div class="player-name-area player-name-area-br">
-            @if (true)
+            @if (gameLogic.Server == TournamentWorks.Shared.Serves.RightSideBottom)
             {
                 <ShuttleImage />
             }
-            @BottomRightName
+            @gameLogic.BottomRightName
         </div>
     </div>
 </div>
 
 @code {
-    private int leftSidePoints = 0;
-    private int rightSidePoints = 0;
-    private Stack<Point> pointStack = new Stack<Point>();
+    [Parameter]
+    public int Id { get; set; }
+
+    private TournamentWorks.Shared.GameLogic gameLogic;
+    private TournamentWorks.Domain.Games.Match match;
 
     private bool team1LeftSide = true;
-        
-    private string TopLeftName = "";
-    private string BottomLeftName = "";
-    private string TopRightName = "";
-    private string BottomRightName = "";
+    private bool endGame = false;
+    private bool endMatch = false;
 
-    private enum Point
+    private int gamesToWin;
+    private int currentGame = 0;
+
+    private int team1Wins = 0;
+    private int team2Wins = 0;
+
+    private List<int> team1Score = new List<int>();
+    private List<int> team2Score = new List<int>();
+
+    protected override async Task OnInitializedAsync()
     {
-        LeftSide,
-        RightSide
+        match = await Http.GetFromJsonAsync<TournamentWorks.Domain.Games.Match>($"Match/{Id}");
+
+        //match.Type = Domain.Games.MatchType.MensSingles;
+        //match.PointsToWin = 21;
+        //match.PointsToFinalize = 30;
+        //match.GamesToWin = 2; // best of 3
+        gamesToWin = match.GamesToWin;
+        InitiateGameLogic();
     }
 
     private void IncrementLeftSide()
     {
-        leftSidePoints++;
-        pointStack.Push(Point.LeftSide);
+        var result = gameLogic.ScoreLeftSide();
+        if (result == MatchResult.Team1Victory) 
+        {
+            endGame = true;
+        }
     }
 
     private void IncrementRightSide()
     {
-        rightSidePoints++;
-        pointStack.Push(Point.RightSide);
+        var result = gameLogic.ScoreRightSide();
+        if (result == MatchResult.Team2Victory)
+        {
+            endGame = true;
+        }
     }
 
     private void ReturnPoints()
     {
-        if (pointStack.Peek() == Point.LeftSide)
-        {
-            leftSidePoints--;
-        } else
-        {
-            rightSidePoints--;
-        }
-        pointStack.Pop();
+        gameLogic.ReturnPoints();
+        endGame = false;
     }
 
     private void ChangeServeSide()
     {
-        
+        gameLogic.ChangeServer();
     }
     private void ChangeSides()
     {
-        
+        gameLogic.ChangeSides();
+        team1LeftSide = !team1LeftSide;
+    }
+    private void SwitchPlacesLeft()
+    {
+        gameLogic.SwitchPlacesLeft();
+    }
+    private void SwitchPlacesRight()
+    {
+        gameLogic.SwitchPlacesRight();
+    }
+    private async Task EndMatch()
+    {
+        NavigationManager.NavigateTo($"/match", true);
+    }
+    private async Task EndGame()
+    {
+        currentGame++;
+        var game = new Game()
+        {
+            MatchId = match.Id
+        };
+        GameResult gameResult;
+        if (team1LeftSide)
+        {
+            game.Team1Score = gameLogic.LeftSidePoints;
+            game.Team2Score = gameLogic.RightSidePoints;
+            gameResult = game.Team1Score > game.Team2Score ? GameResult.Team1Victory : GameResult.Team2Victory;
+        }
+        else
+        {
+            game.Team1Score = gameLogic.RightSidePoints;
+            game.Team2Score = gameLogic.LeftSidePoints;
+            gameResult = game.Team1Score > game.Team2Score ? GameResult.Team2Victory : GameResult.Team1Victory;
+        }
+        game.Result = gameResult;
+        if (game.Result == GameResult.Team1Victory)
+        {
+            if (team1LeftSide)
+            {
+                team1Wins++;
+            } else
+            {
+                team2Wins++;
+            }
+        }
+        else
+        {
+            if (!team1LeftSide)
+            {
+                team1Wins++;
+            } else
+            {
+                team2Wins++;
+
+            }
+        }
+        team1Score.Add(game.Team1Score);
+        team2Score.Add(game.Team2Score);
+        var response = await Http.PostAsJsonAsync("game", game);
+        if (team1Wins == gamesToWin || team2Wins == gamesToWin)
+        {
+            match.Result = team1Wins > team2Wins ? MatchResult.Team1Victory : MatchResult.Team2Victory;
+            match.Record = MatchRecord.Played;
+            await Http.PutAsJsonAsync("match", match);
+            endMatch = true;
+            endGame = false;
+        } 
+        else 
+        {
+            team1LeftSide = !team1LeftSide;
+
+            InitiateGameLogic();
+        }
+    }
+    private void InitiateGameLogic()
+    {
+        var isSingles = match.Type == MatchType.MensSingles || match.Type == MatchType.WomensSingles;
+        gameLogic = new TournamentWorks.Shared.GameLogic(isSingles: isSingles,
+            pointsToWin: match.PointsToWin,
+            pointsToFinalize: match.PointsToFinalize
+        );
+        if (currentGame % 2 == 0)
+        {
+            gameLogic.BottomLeftName = match.Player1Name;
+            gameLogic.TopRightName = match.Player3Name;
+            if (!isSingles)
+            {
+                gameLogic.TopLeftName = match.Player2Name;
+                gameLogic.BottomRightName = match.Player4Name;
+            }
+        } else
+        {
+            gameLogic.BottomLeftName = match.Player3Name;
+            gameLogic.TopRightName = match.Player1Name;
+            if (!isSingles)
+            {
+                gameLogic.TopLeftName = match.Player4Name;
+                gameLogic.BottomRightName = match.Player2Name;
+            }
+        }
+        endGame = false;
     }
 }

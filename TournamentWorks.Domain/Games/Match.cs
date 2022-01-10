@@ -18,6 +18,12 @@ namespace TournamentWorks.Domain.Games
         public MatchResult Result { get; set; } = MatchResult.Undetermined;
         public IEnumerable<Game>? Games { get; set; }
         public IEnumerable<PlayerMatch>? PlayersMatches { get; set; }
+
+        //temp
+        public string? Player1Name { get; set; }
+        public string? Player2Name { get; set; }
+        public string? Player3Name { get; set; }
+        public string? Player4Name { get; set; }
     }
 
     public enum MatchType : byte

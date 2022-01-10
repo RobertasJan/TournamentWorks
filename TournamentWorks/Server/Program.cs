@@ -1,20 +1,23 @@
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
+using TournamentWorks.Domain.Repository.Games;
 using TournamentWorks.Infrastructure;
+using TournamentWorks.Infrastructure.Repository.Games;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
 builder.Services.AddRazorPages();
 builder.Services.AddDbContextFactory<TournamentContext>(options =>
 {
-    options.UseSqlServer("Server=FSCC-ROBERTASJ\\SQLEXPRESS;Database=tournament;Integrated Security=true;");//configuration.GetConnectionString("DefaultConnection"));
+    options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=Tournament;Integrated Security=true;");
 });
-//builder.Services.AddDbContext<TournamentContext>(options =>
-//{
-//    options.UseSqlServer("Server=FSCC-ROBERTASJ\\SQLEXPRESS;Database=tournament;Integrated Security=true;");//configuration.GetConnectionString("DefaultConnection"));
-//});
+
+builder.Services.AddScoped<IMatchRepository, MatchRepository>();
+builder.Services.AddScoped<IGameRepository, GameRepository>();
 
 var app = builder.Build();
 

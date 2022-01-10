@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TournamentWorks.Infrastructure;
 
@@ -10,9 +11,10 @@ using TournamentWorks.Infrastructure;
 namespace TournamentWorks.Infrastructure.Migrations
 {
     [DbContext(typeof(TournamentContext))]
-    partial class TournamentContextModelSnapshot : ModelSnapshot
+    [Migration("20220109165917_MatchesEdit")]
+    partial class MatchesEdit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,18 +60,6 @@ namespace TournamentWorks.Infrastructure.Migrations
 
                     b.Property<int>("GamesToWin")
                         .HasColumnType("int");
-
-                    b.Property<string>("Player1Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Player2Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Player3Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Player4Name")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PointsToFinalize")
                         .HasColumnType("int");

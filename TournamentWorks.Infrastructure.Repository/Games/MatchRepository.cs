@@ -15,11 +15,25 @@ namespace TournamentWorks.Infrastructure.Repository.Games
         {
             _dbContext = context;
         }
-        public async Task<bool> InsertMatch(Match match)
+        public async Task<int> Add(Match match)
         {
             await _dbContext.Matches.AddAsync(match);
             await _dbContext.SaveChangesAsync();
-            return true;
+            return match.Id;
+        }
+
+        public Match Get(int id)
+        {
+            return _dbContext.Matches.FirstOrDefault(x => x.Id == id);
+        }
+
+        public async Task<int> Update(Match match)
+        {
+        //    var dbMatch = Get(match.Id);
+        //    dbMatch = match;
+            _dbContext.Update(match);
+            await _dbContext.SaveChangesAsync();
+            return match.Id;
         }
     }
 }

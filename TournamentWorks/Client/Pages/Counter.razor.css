@@ -24,6 +24,28 @@
     margin: 5px;
 }
 
+.end-match-button {
+    margin: 5px;
+    font-size: 26px;
+    height: 70px;
+}
+
+.rotate-90deg {
+    transform: rotate(90deg);
+}
+
+.switch-places-left {
+    position: fixed;
+    top: 57%;
+    left: 49%;
+}
+
+.switch-places-right {
+    position: fixed;
+    top: 57%;
+    left: 62%;
+}
+
 .left-side-score, .right-side-score {
     background-color: #298850; /* green court color */
     height: 80vh;

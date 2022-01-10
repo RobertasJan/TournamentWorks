@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\TournamentWorks.Domain\TournamentWorks.Domain.csproj" />
     <ProjectReference Include="..\Shared\TournamentWorks.Shared.csproj" />
   </ItemGroup>
 
